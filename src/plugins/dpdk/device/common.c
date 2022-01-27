@@ -29,6 +29,8 @@
 #include <dpdk/device/dpdk_priv.h>
 #include <vppinfra/error.h>
 
+#include <stdio.h>
+
 /* DPDK TX offload to vnet hw interface caps mapppings */
 static struct
 {
@@ -99,6 +101,7 @@ dpdk_device_setup (dpdk_device_t * xd)
 
   if (xd->conf.disable_multi_seg == 0)
     {
+  		printf("~~~~~~~~~~~ | xd->conf.disable_multi_seg == 0 | ~~~~~~~~~~~\n");
       txo |= DEV_TX_OFFLOAD_MULTI_SEGS;
       rxo |= DEV_RX_OFFLOAD_JUMBO_FRAME | DEV_RX_OFFLOAD_SCATTER;
     }
@@ -111,8 +114,10 @@ dpdk_device_setup (dpdk_device_t * xd)
     txo |= DEV_TX_OFFLOAD_TCP_CKSUM | DEV_TX_OFFLOAD_TCP_TSO |
 	   DEV_TX_OFFLOAD_VXLAN_TNL_TSO;
 
-  if (xd->conf.disable_rx_scatter)
+  if (xd->conf.disable_rx_scatter) {
+  	printf("~~~~~~~~~~~ | xd->conf.disable_rx_scatter | ~~~~~~~~~~~\n");
     rxo &= ~DEV_RX_OFFLOAD_SCATTER;
+  }
 
   /* mask unsupported offloads */
   rxo &= dev_info.rx_offload_capa;
@@ -233,6 +238,9 @@ dpdk_device_setup (dpdk_device_t * xd)
 
   dpdk_device_flag_set (xd, DPDK_DEVICE_FLAG_RX_IP4_CKSUM,
 			rxo & DEV_RX_OFFLOAD_IPV4_CKSUM);
+
+  printf("~~~~~~~~~~~ | DPDK_DEVICE_FLAG_MAYBE_MULTISEG = %u | ~~~~~~~~~~~\n", rxo & DEV_RX_OFFLOAD_SCATTER);
+
   dpdk_device_flag_set (xd, DPDK_DEVICE_FLAG_MAYBE_MULTISEG,
 			rxo & DEV_RX_OFFLOAD_SCATTER);
   dpdk_device_flag_set (

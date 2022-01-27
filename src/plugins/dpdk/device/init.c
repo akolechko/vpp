@@ -164,6 +164,8 @@ check_l3cache ()
 static clib_error_t *
 dpdk_lib_init (dpdk_main_t * dm)
 {
+  printf("~~~~~~~~~~~ | dpdk_lib_init() | ~~~~~~~~~~~\n");
+
   vnet_main_t *vnm = vnet_get_main ();
   u32 nports;
   u16 port_id;
@@ -436,6 +438,7 @@ dpdk_lib_init (dpdk_main_t * dm)
 	      break;
 
 	    case VNET_DPDK_PMD_ENA:
+  		  printf("~~~~~~~~~~~ | case VNET_DPDK_PMD_ENA | ~~~~~~~~~~~\n");
 	      xd->port_type = VNET_DPDK_PORT_TYPE_ETH_VF;
 	      xd->conf.disable_rx_scatter = 1;
 	      xd->conf.enable_rxq_int = 1;
