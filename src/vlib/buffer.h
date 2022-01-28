@@ -50,7 +50,7 @@
 #include <vlib/config.h>	/* for __PRE_DATA_SIZE */
 #define VLIB_BUFFER_PRE_DATA_SIZE	__PRE_DATA_SIZE
 
-#define VLIB_BUFFER_DEFAULT_DATA_SIZE (2048)
+#define VLIB_BUFFER_DEFAULT_DATA_SIZE (9000)
 
 /* Minimum buffer chain segment size. Does not apply to last buffer in chain.
    Dataplane code can safely asume that specified amount of data is not split
